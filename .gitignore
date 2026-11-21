@@ -1,0 +1,9 @@
+dist/
+GaugeData/
+SteamViewerData/
+android/build/
+android/assets/
+*.jks
+*.keystore
+__pycache__/
+.DS_Store

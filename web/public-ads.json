@@ -1,0 +1,122 @@
+{
+  "zh": [
+    {
+      "title": "守住钱袋子，谨防电信诈骗",
+      "body": "未知链接不点击，陌生来电不轻信，个人信息不透露，转账汇款多核实。",
+      "source": "国家反诈中心",
+      "url": "https://www.mps.gov.cn/"
+    },
+    {
+      "title": "畅通生命通道",
+      "body": "请勿占用、堵塞疏散通道和安全出口。发现火情，请及时拨打 119。",
+      "source": "中国消防",
+      "url": "https://www.119.gov.cn/"
+    },
+    {
+      "title": "无偿献血，挽救生命",
+      "body": "符合条件时，可以前往当地血站参与无偿献血。献血前请保证休息，携带有效证件。",
+      "source": "中国红十字会",
+      "url": "https://www.redcross.org.cn/"
+    }
+  ],
+  "en": [
+    {
+      "title": "Road safety starts with attention",
+      "body": "Slow down near schools and crossings. Never use a phone while driving. A few seconds of care can prevent a lifetime of loss.",
+      "source": "World Health Organization",
+      "url": "https://www.who.int/health-topics/road-safety"
+    },
+    {
+      "title": "It is okay to ask for help",
+      "body": "Mental health is health. If you or someone you know is struggling, reach out to a local support service or a trusted person.",
+      "source": "World Health Organization",
+      "url": "https://www.who.int/health-topics/mental-health"
+    },
+    {
+      "title": "Clean air, shared responsibility",
+      "body": "Small choices add up: use public transport when possible, avoid open burning, and support cleaner household energy.",
+      "source": "World Health Organization",
+      "url": "https://www.who.int/health-topics/air-pollution"
+    }
+  ],
+  "ja": [
+    {
+      "title": "地震に備えて、備蓄と避難経路を確認",
+      "body": "飲料水、非常食、懐中電灯、携帯充電器を準備し、家族で避難場所と連絡方法を話し合っておきましょう。",
+      "source": "気象庁",
+      "url": "https://www.jma.go.jp/"
+    },
+    {
+      "title": "献血で、いのちを支える",
+      "body": "献血は多くの治療を支えています。体調のよい日に、お近くの献血会場でご協力ください。",
+      "source": "日本赤十字社",
+      "url": "https://www.jrc.or.jp/"
+    },
+    {
+      "title": "住宅火災を防ぐために",
+      "body": "コンロの周りを整理し、寝たばこを避け、住宅用火災警報器の点検を忘れずに。",
+      "source": "消防庁",
+      "url": "https://www.fdma.go.jp/"
+    }
+  ],
+  "de": [
+    {
+      "title": "Erste Hilfe kann Leben retten",
+      "body": "Ein Notruf und beherztes Handeln machen den Unterschied. Frischen Sie Ihre Erste-Hilfe-Kenntnisse regelmäßig auf.",
+      "source": "Deutsches Rotes Kreuz",
+      "url": "https://www.drk.de/"
+    },
+    {
+      "title": "Vorsorge für den Notfall",
+      "body": "Informieren Sie sich über Warnungen, Notfalltreffpunkte und die richtigen Verhaltensregeln in Ihrer Region.",
+      "source": "Bundesamt für Bevölkerungsschutz",
+      "url": "https://www.bbk.bund.de/"
+    },
+    {
+      "title": "Blutspende braucht dich",
+      "body": "Mit einer Blutspende können Sie Menschen in Not helfen. Informieren Sie sich bei Ihrer regionalen Blutspendezentrale.",
+      "source": "Deutsches Rotes Kreuz",
+      "url": "https://www.drk.de/hilfe-in-deutschland/blutspende/"
+    }
+  ],
+  "ko": [
+    {
+      "title": "재난 대비, 미리 확인하세요",
+      "body": "대피 장소와 비상 연락처를 가족과 공유하고, 생수와 상비약을 준비해 두세요.",
+      "source": "국민재난안전포털",
+      "url": "https://www.safekorea.go.kr/"
+    },
+    {
+      "title": "헌혈로 생명을 나눕니다",
+      "body": "헌혈은 수혈이 필요한 환자에게 큰 도움이 됩니다. 가까운 헌혈의 집에서 참여할 수 있습니다.",
+      "source": "대한적십자사",
+      "url": "https://www.redcross.or.kr/"
+    },
+    {
+      "title": "응급처치, 몇 분이 생사를 가릅니다",
+      "body": "심폐소생술과 응급처치 방법을 익혀 두면 긴급한 순간에 도움이 될 수 있습니다.",
+      "source": "대한적십자사",
+      "url": "https://www.redcross.or.kr/"
+    }
+  ],
+  "ar": [
+    {
+      "title": "سلامة الطريق تبدأ بالانتباه",
+      "body": "خفف السرعة قرب المدارس والمعابر، ولا تستخدم الهاتف أثناء القيادة. ثوانٍ من الحذر قد تمنع خسارة مدى الحياة.",
+      "source": "منظمة الصحة العالمية",
+      "url": "https://www.who.int/ar/health-topics/road-safety"
+    },
+    {
+      "title": "طلب المساعدة لا يقلل من قوتك",
+      "body": "الصحة النفسية جزء من الصحة. إذا كنت تعاني أو تعرف شخصًا يعاني، تواصل مع خدمة دعم محلية أو شخص تثق به.",
+      "source": "منظمة الصحة العالمية",
+      "url": "https://www.who.int/ar/health-topics/mental-health"
+    },
+    {
+      "title": "الماء مسؤولية مشتركة",
+      "body": "أغلق الصنابير عند عدم الاستخدام، وأصلح التسربات، وشارك في الحفاظ على المياه لصالح الجميع.",
+      "source": "اليونيسف",
+      "url": "https://www.unicef.org/ar/water-and-sanitation"
+    }
+  ]
+}
