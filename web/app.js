@@ -15,7 +15,7 @@
   window.SV_PLACEHOLDER = PLACEHOLDER;
 
   const DEFAULT_STATE = {
-    settings: { language: "zh", country: "CN", disclaimerAccepted: false, disclaimerVersion: 1, mirror: "official", theme: "system", publicService: false },
+    settings: { language: "zh", country: "CN", disclaimerAccepted: false, disclaimerVersion: 1, mirror: "official", theme: "system", publicService: false, platform: "steam" },
     history: [],
     favorites: [],
     prices: {}
@@ -31,17 +31,99 @@
     ["about", "https://store.steampowered.com/about/"]
   ];
 
+  const PLATFORMS = [
+    { key: "steam", name: "Steam" },
+    { key: "ps", name: "PlayStation" },
+    { key: "xbox", name: "Xbox" },
+    { key: "epic", name: "Epic Games" },
+    { key: "wegame", name: "WeGame" }
+  ];
+
+  const PLATFORM_LOCALES = {
+    ps: { zh: "zh-hans-cn", en: "en-us", ja: "ja-jp", de: "de-de", ko: "ko-kr", ar: "ar-ae" },
+    xbox: { zh: "zh-CN", en: "en-US", ja: "ja-JP", de: "de-DE", ko: "ko-KR", ar: "ar-SA" },
+    epic: { zh: "zh-CN", en: "en-US", ja: "ja-JP", de: "de-DE", ko: "ko-KR", ar: "ar-SA" },
+    wegame: { zh: "zh-CN" }
+  };
+
+  function platformMeta(key) {
+    return PLATFORMS.find((p) => p.key === key) || PLATFORMS[0];
+  }
+
+  function platformLocale(key) {
+    const map = PLATFORM_LOCALES[key] || {};
+    return map[SV.lang] || map.en || "en-US";
+  }
+
+  function platformHome(key) {
+    const loc = platformLocale(key);
+    if (key === "ps") return `https://store.playstation.com/${loc}/`;
+    if (key === "xbox") return `https://www.xbox.com/${loc}/`;
+    if (key === "epic") return `https://store.epicgames.com/${loc}/`;
+    if (key === "wegame") return "https://www.wegame.com.cn/store/";
+    return "https://store.steampowered.com/";
+  }
+
+  function platformSearchURL(key, query) {
+    const q = encodeURIComponent(query);
+    const loc = platformLocale(key);
+    if (key === "ps") return `https://store.playstation.com/${loc}/search/${q}`;
+    if (key === "xbox") return `https://www.xbox.com/${loc}/search/results?q=${q}`;
+    if (key === "epic") return `https://store.epicgames.com/${loc}/browse?q=${q}`;
+    if (key === "wegame") return "https://www.wegame.com.cn/store/";
+    return "";
+  }
+
+  function platformLinks(key) {
+    const loc = platformLocale(key);
+    if (key === "ps") return [
+      ["store", platformHome("ps")],
+      ["support", `https://www.playstation.com/${loc}/support/`]
+    ];
+    if (key === "xbox") return [
+      ["store", platformHome("xbox")],
+      ["gamePass", `https://www.xbox.com/${loc}/xbox-game-pass`],
+      ["support", "https://support.xbox.com/"]
+    ];
+    if (key === "epic") return [
+      ["store", platformHome("epic")],
+      ["freeGames", `https://store.epicgames.com/${loc}/free-games`],
+      ["support", "https://www.epicgames.com/help/"]
+    ];
+    if (key === "wegame") return [
+      ["store", platformHome("wegame")],
+      ["support", "https://www.wegame.com.cn/"]
+    ];
+    return QUICK_LINKS;
+  }
+
+  const STORE_WEB_SUFFIXES = [
+    "steampowered.com", "steamcommunity.com", "valvesoftware.com", "steamstatic.com", "eccdnx.com",
+    "playstation.com", "xbox.com", "epicgames.com", "wegame.com.cn"
+  ];
+
+  function isStoreWebURL(raw) {
+    try {
+      const u = new URL(raw);
+      if (u.protocol !== "https:") return false;
+      return STORE_WEB_SUFFIXES.some((s) => u.hostname === s || u.hostname.endsWith("." + s));
+    } catch {
+      return false;
+    }
+  }
+
   const SV = {
     lang: "zh",
     country: "CN",
     route: "search",
     state: null,
     usage: null,
-    info: { version: "1.4.0", dataDir: "" },
+    info: { version: "1.5.0-beta", dataDir: "" },
     mirror: "official",
     effectiveTheme: "light",
     publicAds: null,
     publicAdIndex: 0,
+    platform: "steam",
     lastQuery: "",
     results: null,
     featured: null,
@@ -246,7 +328,7 @@
   function normaliseState(raw) {
     const s = raw && typeof raw === "object" ? raw : {};
     const settings = Object.assign(
-      { language: "zh", country: "CN", disclaimerAccepted: false, disclaimerVersion: 1, mirror: "official", theme: "system", publicService: false },
+      { language: "zh", country: "CN", disclaimerAccepted: false, disclaimerVersion: 1, mirror: "official", theme: "system", publicService: false, platform: "steam" },
       s.settings || {}
     );
     if (!I18N[settings.language]) settings.language = "zh";
@@ -254,6 +336,7 @@
     if (settings.mirror !== "china") settings.mirror = "official";
     if (!["system", "light", "dark"].includes(settings.theme)) settings.theme = "system";
     settings.publicService = !!settings.publicService;
+    if (!PLATFORMS.some((p) => p.key === settings.platform)) settings.platform = "steam";
     return {
       settings,
       history: Array.isArray(s.history) ? s.history.filter((x) => x && (x.kind === "search" || x.kind === "game")) : [],
@@ -285,7 +368,7 @@
       try {
         SV.info = JSON.parse(window.Android.getInfo() || "{}");
       } catch {
-        SV.info = { version: "1.4.0", dataDir: "" };
+        SV.info = { version: "1.5.0-beta", dataDir: "" };
       }
       try {
         SV.usage = JSON.parse(window.Android.getUsage() || "{}");
@@ -300,12 +383,12 @@
       if (!res.ok) throw new Error("state " + res.status);
       const data = await res.json();
       SV.state = normaliseState(data.state);
-      SV.info = { version: data.version || "1.4.0", dataDir: data.dataDir || "", platform: data.platform || "" };
+      SV.info = { version: data.version || "1.5.0-beta", dataDir: data.dataDir || "", platform: data.platform || "" };
       SV.usage = data.usage || {};
     } catch (err) {
       console.error(err);
       SV.state = normaliseState(DEFAULT_STATE);
-      SV.info = { version: "1.4.0", dataDir: "" };
+      SV.info = { version: "1.5.0-beta", dataDir: "" };
     }
   }
 
@@ -337,7 +420,7 @@
     const offline = !navigator.onLine;
     banner.hidden = !offline;
     banner.textContent = offline ? t("offline.text") : "";
-    if (!offline && SV.state && SV.route === "search" && !SV.results) loadFeatured();
+    if (!offline && SV.state && SV.route === "search" && !SV.results && SV.platform === "steam") loadFeatured();
   }
 
   function applyLanguage() {
@@ -355,7 +438,7 @@
     if (input) input.placeholder = t("search.placeholder");
     updateRegionLabel();
     const footerBuild = $("#footerBuild");
-    if (footerBuild) footerBuild.textContent = "v" + (SV.info.version || "1.4.0");
+    if (footerBuild) footerBuild.textContent = "v" + (SV.info.version || "1.5.0-beta");
     updateOnlineState();
     document.title = "Gauge";
   }
@@ -431,9 +514,54 @@
     }
   }
 
+  function setPlatform(key) {
+    if (!PLATFORMS.some((p) => p.key === key)) return;
+    SV.platform = key;
+    SV.state.settings.platform = key;
+    SV.results = null;
+    SV.lastQuery = "";
+    saveSoon();
+    if (SV.route === "game") {
+      location.hash = "#/";
+    } else {
+      route();
+    }
+  }
+
+  function renderPlatformTabs() {
+    const el = $("#platformTabs");
+    if (!el) return;
+    el.innerHTML = PLATFORMS.map((p) =>
+      `<button type="button" class="platform-tab ${p.key === SV.platform ? "active" : ""}" data-platform="${p.key}" aria-pressed="${p.key === SV.platform ? "true" : "false"}">${escapeHTML(p.name)}</button>`
+    ).join("");
+    el.querySelectorAll("[data-platform]").forEach((b) => b.addEventListener("click", () => {
+      if (b.getAttribute("data-platform") !== SV.platform) setPlatform(b.getAttribute("data-platform"));
+    }));
+  }
+
+  function renderPlatformPanel() {
+    const panel = $("#platformPanel");
+    if (!panel) return;
+    const meta = platformMeta(SV.platform);
+    const links = platformLinks(SV.platform).map(([key, url]) => {
+      const labelKey = ["store", "support", "community"].includes(key) ? "web." + key : "platform." + key;
+      return `<button class="btn" type="button" data-platform-url="${escapeHTML(url)}">${escapeHTML(t(labelKey))} ↗</button>`;
+    }).join("");
+    panel.hidden = false;
+    panel.innerHTML = `
+      <div class="platform-note">
+        <span class="platform-beta">${escapeHTML(t("platform.beta"))}</span>
+        <p>${escapeHTML(t("platform.betaNote"))}</p>
+      </div>
+      <div class="platform-links">${links}</div>`;
+    panel.querySelectorAll("[data-platform-url]").forEach((b) => b.addEventListener("click", () => {
+      openURL(b.getAttribute("data-platform-url"));
+    }));
+  }
+
   function renderMirrorHint(container) {
     if (!container) return;
-    const show = SV.lang === "zh" && SV.mirror !== "china";
+    const show = SV.platform === "steam" && SV.lang === "zh" && SV.mirror !== "china";
     container.hidden = !show;
     if (!show) {
       container.innerHTML = "";
@@ -774,7 +902,7 @@
   function renderFeatured() {
     const box = $("#featuredSections");
     if (!box) return;
-    if (!SV.featured || SV.route !== "search" || SV.results) {
+    if (SV.platform !== "steam" || !SV.featured || SV.route !== "search" || SV.results) {
       box.hidden = true;
       return;
     }
@@ -800,7 +928,7 @@
   }
 
   async function loadFeatured() {
-    if (SV.featured || SV.featuredLoading) { renderFeatured(); return; }
+    if (SV.featured || SV.featuredLoading || SV.platform !== "steam") { renderFeatured(); return; }
     if (!navigator.onLine) { renderFeatured(); return; }
     SV.featuredLoading = true;
     try {
@@ -819,8 +947,41 @@
 
   function renderSearchView() {
     showView("search");
+    renderPlatformTabs();
+    const meta = platformMeta(SV.platform);
+    const isSteam = SV.platform === "steam";
     const input = $("#searchInput");
     if (input && SV.lastQuery !== undefined) input.value = SV.lastQuery || "";
+    if (input) input.placeholder = isSteam ? t("search.placeholder") : t("platform.searchPlaceholder").replace("{name}", meta.name);
+    const title = $(".intro h1");
+    const lede = $(".intro .lede");
+    if (title) title.textContent = isSteam ? t("search.title") : t("platform.searchTitle").replace("{name}", meta.name);
+    if (lede) {
+      lede.hidden = !isSteam;
+      lede.textContent = isSteam ? t("search.hint") : "";
+    }
+
+    if (!isSteam) {
+      const mirror = $("#mirrorHint");
+      if (mirror) mirror.hidden = true;
+      const recent = $("#recentSection");
+      if (recent) recent.hidden = true;
+      const featured = $("#featuredSections");
+      if (featured) featured.hidden = true;
+      const head = $("#resultsHead");
+      if (head) head.hidden = true;
+      const grid = $("#resultsGrid");
+      if (grid) grid.innerHTML = "";
+      const empty = $("#emptyState");
+      if (empty) empty.hidden = true;
+      const status = $("#searchStatus");
+      if (status) status.hidden = true;
+      renderPlatformPanel();
+      renderPublicAd();
+      return;
+    }
+    const panel = $("#platformPanel");
+    if (panel) panel.hidden = true;
     renderMirrorHint($("#mirrorHint"));
     renderPublicAd();
     renderRecent();
@@ -931,6 +1092,14 @@
     }
     if (!navigator.onLine) {
       toast(t("offline.search"));
+      return;
+    }
+    if (SV.platform !== "steam") {
+      SV.lastQuery = q;
+      $("#searchInput").value = q;
+      const url = platformSearchURL(SV.platform, q);
+      if (SV.platform === "wegame") toast(t("platform.wegameSearch"));
+      openURL(url);
       return;
     }
     if (/^\d{3,}$/.test(q)) {
@@ -1519,42 +1688,8 @@
 
   // ------------------------------------------------------------- browser
 
-  function renderWebView() {
-    showView("web");
-    document.title = t("web.title") + " · Gauge";
-    const links = QUICK_LINKS.map(([key, url]) =>
-      `<button class="quick-link" type="button" data-open-web="${escapeHTML(url)}"><span>${escapeHTML(t("web." + key))}</span><span class="q-arrow">↗</span></button>`
-    ).join("");
-    $("#webView").innerHTML = `
-      <div class="web-header">
-        <h1>${escapeHTML(t("web.title"))}</h1>
-        <p class="lede">${escapeHTML(t("web.sub"))}</p>
-        <form class="url-bar" id="webForm">
-          <label class="sr-only" for="webURL">URL</label>
-          <input id="webURL" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="${escapeHTML(t("web.placeholder"))}">
-          <button type="submit">${escapeHTML(t("web.open"))} ↗</button>
-        </form>
-        <div class="mirror-hint" id="webMirrorHint" hidden></div>
-        <div class="quick-links">${links}</div>
-        <p class="web-note">${escapeHTML(t("mirror.label"))}: ${escapeHTML(t(SV.mirror === "china" ? "mirror.china" : "mirror.official"))} · ${escapeHTML(t("web.note"))}</p>
-      </div>`;
-    renderMirrorHint($("#webMirrorHint"));
-    $("#webForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      let raw = $("#webURL").value.trim();
-      if (!raw) return;
-      if (!/^https?:\/\//i.test(raw)) raw = "https://" + raw;
-      if (!isSteamWebURL(raw)) {
-        toast(t("web.invalid"));
-        return;
-      }
-      openSteamPage(raw);
-    });
-    $$("#webView [data-open-web]").forEach((b) => b.addEventListener("click", () => openSteamPage(b.getAttribute("data-open-web"))));
-  }
-
-  function openSteamPage(url) {
-    if (!isSteamWebURL(url)) {
+  function openURL(url) {
+    if (!isStoreWebURL(url)) {
       toast(t("web.invalid"));
       return;
     }
@@ -1572,6 +1707,62 @@
         if (!r.ok) toast(t("toast.error"));
       }).catch(() => toast(t("toast.error")));
     }
+  }
+
+  function openSteamPage(url) {
+    if (!isSteamWebURL(url)) {
+      toast(t("web.invalid"));
+      return;
+    }
+    openURL(url);
+  }
+
+  function openStorePage(url) {
+    if (!isStoreWebURL(url)) {
+      toast(t("web.invalid"));
+      return;
+    }
+    openURL(url);
+  }
+
+  function renderWebView() {
+    showView("web");
+    const meta = platformMeta(SV.platform);
+    const isSteam = SV.platform === "steam";
+    const title = isSteam ? t("web.title") : t("platform.browse").replace("{name}", meta.name);
+    const sub = isSteam ? t("web.sub") : t("platform.webSub").replace("{name}", meta.name);
+    document.title = title + " · Gauge";
+    const webKeys = new Set(["store", "community", "support", "workshop", "news", "about"]);
+    const links = platformLinks(SV.platform).map(([key, url]) => {
+      const labelKey = key.startsWith("web.") ? key : (webKeys.has(key) ? "web." + key : "platform." + key);
+      return `<button class="quick-link" type="button" data-open-web="${escapeHTML(url)}"><span>${escapeHTML(t(labelKey))}</span><span class="q-arrow">↗</span></button>`;
+    }).join("");
+    $("#webView").innerHTML = `
+      <div class="web-header">
+        <h1>${escapeHTML(title)}</h1>
+        <p class="lede">${escapeHTML(sub)}</p>
+        <form class="url-bar" id="webForm">
+          <label class="sr-only" for="webURL">URL</label>
+          <input id="webURL" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="${escapeHTML(isSteam ? t("web.placeholder") : t("platform.searchPlaceholder").replace("{name}", meta.name))}">
+          <button type="submit">${escapeHTML(t("web.open"))} ↗</button>
+        </form>
+        <div class="mirror-hint" id="webMirrorHint" hidden></div>
+        <div class="quick-links">${links}</div>
+        <p class="web-note">${escapeHTML(isSteam ? t("mirror.label") + ": " + t(SV.mirror === "china" ? "mirror.china" : "mirror.official") + " · " + t("web.note") : t("platform.betaNote"))}</p>
+      </div>`;
+    if (isSteam) renderMirrorHint($("#webMirrorHint"));
+    $("#webForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      let raw = $("#webURL").value.trim();
+      if (!raw) return;
+      if (!/^https?:\/\//i.test(raw)) raw = "https://" + raw;
+      if (!isStoreWebURL(raw)) {
+        toast(t("web.invalid"));
+        return;
+      }
+      openStorePage(raw);
+    });
+    $$("#webView [data-open-web]").forEach((b) => b.addEventListener("click", () => openStorePage(b.getAttribute("data-open-web"))));
   }
 
   // ------------------------------------------------------------- modals
@@ -1623,6 +1814,12 @@
         <p class="hint-text">${escapeHTML(t("mirror.hint"))}</p>
       </div>
       <div class="settings-block">
+        <p class="settings-label">${escapeHTML(t("platform.label"))}</p>
+        <select class="country-select" id="settingsPlatform">
+          ${PLATFORMS.map((p) => `<option value="${p.key}" ${SV.platform === p.key ? "selected" : ""}>${escapeHTML(p.name)}</option>`).join("")}
+        </select>
+      </div>
+      <div class="settings-block">
         <p class="settings-label">${escapeHTML(t("public.label"))}</p>
         <div class="settings-actions">
           <button class="btn" type="button" data-act="publicToggle">${escapeHTML(SV.state.settings.publicService ? t("public.off") : t("public.on"))}</button>
@@ -1647,7 +1844,7 @@
       <div class="settings-block">
         <p class="settings-label">${escapeHTML(t("settings.about"))}</p>
         <div class="meta-list">
-          <div class="meta-row"><span>${escapeHTML(t("settings.version"))}</span><span>v${escapeHTML(SV.info.version || "1.4.0")}</span></div>
+          <div class="meta-row"><span>${escapeHTML(t("settings.version"))}</span><span>v${escapeHTML(SV.info.version || "1.5.0-beta")}</span></div>
           <div class="meta-row"><span>${escapeHTML(t("settings.source"))}</span><span>MIT / open source</span></div>
         </div>
         <p class="hint-text">${escapeHTML(t("settings.sourceNote"))}</p>
@@ -1670,6 +1867,12 @@
         const sel = $("#settingsCountry", root);
         sel.addEventListener("change", () => {
           applyRegion(sel.value);
+          toast(t("toast.saved"));
+        });
+        const platformSelect = $("#settingsPlatform", root);
+        platformSelect.addEventListener("change", () => {
+          setPlatform(platformSelect.value);
+          closeModal();
           toast(t("toast.saved"));
         });
         root.querySelectorAll("[data-theme-choice]").forEach((b) => b.addEventListener("click", () => {
@@ -1986,6 +2189,7 @@
     SV.lang = SV.state.settings.language;
     SV.country = SV.state.settings.country;
     SV.mirror = SV.state.settings.mirror === "china" ? "china" : "official";
+    SV.platform = SV.state.settings.platform || "steam";
     applyTheme();
     applyLanguage();
     updateOnlineState();

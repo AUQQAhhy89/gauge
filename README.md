@@ -1,8 +1,8 @@
 # Gauge
 
-查看 Steam 游戏公开数据的桌面和 Android 工具。黑白界面，支持深色模式。
+查看 Steam 游戏数据，并提供 PlayStation、Xbox、Epic Games、WeGame 官方商店入口的桌面和 Android 工具。黑白界面，支持深色模式。
 
-Gauge 是第三方软件，和 Valve / Steam 没有关系。
+Gauge 是第三方软件，和 Valve / Steam、Sony、Microsoft、Epic Games、腾讯均无关系。
 
 ## 功能
 
@@ -16,10 +16,20 @@ Gauge 是第三方软件，和 Valve / Steam 没有关系。
 - 中文、English、日本語、Deutsch、한국어、العربية
 - 跟随系统 / 浅色 / 深色
 - 断网时界面、收藏、历史和设置仍可使用
+- 可切换 Steam / PlayStation / Xbox / Epic Games / WeGame 平台
+- PlayStation、Xbox、Epic Games、WeGame 目前为内测入口，使用官方商店搜索
 
 ## 仓库
 
 https://github.com/AUQQAhhy89/gauge
+
+## 游戏平台
+
+- 搜索页顶部和设置里可以切换平台。
+- Steam 保留完整数据详情。
+- PlayStation、Xbox、Epic Games、WeGame 目前是内测支持：搜索会打开对应官方商店，结果在应用内浏览器查看。
+- 价格、可用性和商品信息以官方商店页面为准。
+- WeGame 暂不支持直接搜索，会打开官方商店首页。
 
 ## 下载
 
@@ -83,7 +93,7 @@ Android：
 
 ## 免责声明
 
-本软件是第三方工具，与 Steam、Valve 及其关联公司没有关系，也未获得授权。当前版本处于测试阶段，请勿将本软件的缺陷提交给 Steam 或 Valve。
+本软件是第三方工具，与 Valve / Steam、Sony、Microsoft、Epic Games、腾讯及其关联公司没有关系，也未获得授权。当前版本处于测试阶段，请勿将本软件的缺陷提交给 Steam 或 Valve。
 
 本软件免费提供。如果你为它付过费，请立即向收款方申请退款。本软件不以商业营销为目的，属于公益项目。使用中遇到的问题请反馈给制作者，并附上复现步骤和日志。
 

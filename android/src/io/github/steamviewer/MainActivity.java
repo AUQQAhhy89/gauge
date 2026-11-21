@@ -50,12 +50,12 @@ import java.util.Map;
 
 public class MainActivity extends Activity {
     private static final String ASSET_HOST = "appassets.androidplatform.net";
-    private static final String VERSION = "1.4.0";
+    private static final String VERSION = "1.5.0-beta";
     private static final int LIGHT_BG = Color.rgb(233, 233, 231);
     private static final int DARK_BG = Color.rgb(27, 27, 26);
     private static final String UA =
             "Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) " +
-            "Chrome/124.0.0.0 Mobile Safari/537.36 Gauge/1.4.0";
+            "Chrome/124.0.0.0 Mobile Safari/537.36 Gauge/1.5.0-beta";
     private static final String[] API_HOSTS = {
             "store.steampowered.com", "api.steampowered.com", "steamcommunity.com",
             "www.steamcommunity.com", "steamcharts.com"

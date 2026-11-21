@@ -4,13 +4,13 @@ cd "$(dirname "$0")"
 ./scripts/build-windows.sh
 ./android/build.sh
 mkdir -p dist
-rm -f dist/Gauge-1.4.0-source.zip
+rm -f dist/Gauge-1.5.0-beta-source.zip
 python3 - <<'PY2'
 import zipfile, os
 root = os.getcwd()
 include_dirs = ['web', 'android/res', 'android/src', 'build-assets', 'scripts', 'preview']
 include_files = ['main.go', 'go.mod', 'README.md', 'LICENSE', 'android/build.sh', 'android/AndroidManifest.xml', 'build-all.sh', 'rsrc_windows_amd64.syso']
-with zipfile.ZipFile('dist/Gauge-1.4.0-source.zip', 'w', zipfile.ZIP_DEFLATED) as z:
+with zipfile.ZipFile('dist/Gauge-1.5.0-beta-source.zip', 'w', zipfile.ZIP_DEFLATED) as z:
     for f in include_files:
         z.write(f, f)
     for d in include_dirs:

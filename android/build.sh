@@ -53,7 +53,7 @@ $AAPT2 compile --dir res -o build/res.zip
 $AAPT2 link -o build/app-unsigned.apk -I "$ANDROID_JAR" \
   --manifest AndroidManifest.xml -R build/res.zip --auto-add-overlay -A assets \
   --min-sdk-version 24 --target-sdk-version 34 \
-  --version-code 10 --version-name 1.4.0
+  --version-code 11 --version-name 1.5.0-beta
 
 "$JAVAC" -source 8 -target 8 -classpath "$ANDROID_JAR" -d build/classes \
   $(find src -name '*.java')

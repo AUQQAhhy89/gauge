@@ -33,7 +33,7 @@ import (
 )
 
 const (
-	appVersion        = "1.4.0"
+	appVersion        = "1.5.0-beta"
 	disclaimerVersion = 1
 	stateFileName     = "state.json"
 )
@@ -51,6 +51,7 @@ type Settings struct {
 	Mirror             string `json:"mirror"`
 	Theme              string `json:"theme"`
 	PublicService      bool   `json:"publicService"`
+	Platform           string `json:"platform"`
 }
 
 type HistoryItem struct {
@@ -273,6 +274,7 @@ func defaultState() State {
 			Mirror:             "official",
 			Theme:              "system",
 			PublicService:      false,
+			Platform:           "steam",
 		},
 		History:   []HistoryItem{},
 		Favorites: []Favorite{},
@@ -352,6 +354,9 @@ func normaliseState(st State) State {
 	}
 	if st.Settings.Theme != "light" && st.Settings.Theme != "dark" {
 		st.Settings.Theme = "system"
+	}
+	if st.Settings.Platform == "" {
+		st.Settings.Platform = "steam"
 	}
 	if st.History == nil {
 		st.History = []HistoryItem{}
@@ -600,6 +605,7 @@ func isSteamWebHost(host string) bool {
 	for _, suffix := range []string{
 		"steampowered.com", "steamcommunity.com", "valvesoftware.com",
 		"steamstatic.com", "steamcontent.com", "eccdnx.com",
+		"playstation.com", "xbox.com", "epicgames.com", "wegame.com.cn",
 	} {
 		if host == suffix || strings.HasSuffix(host, "."+suffix) {
 			return true

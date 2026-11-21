@@ -90,6 +90,7 @@ const I18N = {
     },
     theme: { label: "外观", system: "跟随系统", light: "浅色", dark: "深色" },
     public: { label: "公益项目", askTitle: "愿意助力公益项目吗？", askSub: "选择愿意后，Gauge 会按当前界面语言展示本地公益广告。内容来自公益机构公开信息，不收集个人数据，也可以在设置里随时关闭。", yes: "愿意", no: "暂不", note: "公益广告只用于公共信息传播，不涉及商业投放。", continue: "继续", badge: "公益", next: "换一条", view: "查看公益广告", on: "参与公益项目", off: "关闭公益广告", settingsHint: "开启后会按界面语言展示本地公益广告。", empty: "公益内容暂时不可用。", enabled: "已开启公益项目", disabled: "已关闭公益广告" },
+    platform: { label: "游戏平台", beta: "内测", betaNote: "PlayStation / Xbox / Epic / WeGame 目前使用官方商店搜索，结果在应用内浏览器打开；价格与可用性以商店页面为准。", searchTitle: "在 {name} 搜索", searchPlaceholder: "在 {name} 搜索游戏", wegameSearch: "WeGame 暂不支持直接搜索，已打开官方商店。", browse: "浏览 {name}", webSub: "在系统默认浏览器中打开 {name} 官方商店。", gamePass: "Game Pass", freeGames: "免费游戏", settings: "游戏平台", openStore: "打开官方商店" },
     featured: { top: "正在热销", specials: "本周特惠" },
     search: {
       kicker: "STEAM / 公开数据", title: "搜索一款游戏",
@@ -180,6 +181,7 @@ const I18N = {
     },
     theme: { label: "Appearance", system: "System", light: "Light", dark: "Dark" },
     public: { label: "Public-interest project", askTitle: "Support a public-interest project?", askSub: "If you agree, Gauge will show local public-service messages based on your interface language. Content comes from public information published by civic organizations; no personal data is collected, and you can turn it off anytime in Settings.", yes: "I'm in", no: "Not now", note: "These messages are for public information only, not commercial advertising.", continue: "Continue", badge: "Public service", next: "Next", view: "View public-service messages", on: "Join the project", off: "Turn off public messages", settingsHint: "When enabled, local public-service messages are shown in your interface language.", empty: "Public-service content is temporarily unavailable.", enabled: "Public-interest project enabled", disabled: "Public messages turned off" },
+    platform: { label: "Game platform", beta: "Beta", betaNote: "PlayStation / Xbox / Epic / WeGame currently use their official store search, opened in the in-app browser. Prices and availability are determined by the store page.", searchTitle: "Search {name}", searchPlaceholder: "Search games on {name}", wegameSearch: "WeGame does not support direct search yet; the official store was opened.", browse: "Browse {name}", webSub: "Open the official {name} store in your default browser.", gamePass: "Game Pass", freeGames: "Free games", settings: "Game platform", openStore: "Open official store" },
     featured: { top: "Top sellers", specials: "On sale" },
     search: {
       kicker: "STEAM / PUBLIC DATA", title: "Search a game",
@@ -270,6 +272,7 @@ const I18N = {
     },
     theme: { label: "外観", system: "システム", light: "ライト", dark: "ダーク" },
     public: { label: "公益プロジェクト", askTitle: "公益プロジェクトに協力しますか？", askSub: "同意すると、表示言語に合わせて地域の公共広告を表示します。内容は公益団体の公開情報で、個人データは収集しません。設定からいつでもオフにできます。", yes: "協力する", no: "今はしない", note: "公共情報のための表示で、商業広告は含みません。", continue: "続ける", badge: "公益", next: "次へ", view: "公共広告を見る", on: "公益プロジェクトに参加", off: "公共広告をオフ", settingsHint: "オンにすると、表示言語に合わせて地域の公共広告を表示します。", empty: "公共広告は現在利用できません。", enabled: "公益プロジェクトをオンにしました", disabled: "公共広告をオフにしました" },
+    platform: { label: "ゲームプラットフォーム", beta: "ベータ", betaNote: "PlayStation / Xbox / Epic / WeGame は現在、公式ストア検索をアプリ内ブラウザで開きます。価格と在庫はストアページが優先です。", searchTitle: "{name} で検索", searchPlaceholder: "{name} でゲームを検索", wegameSearch: "WeGame は直接検索に未対応のため、公式ストアを開きました。", browse: "{name} を閲覧", webSub: "{name} の公式ストアを既定のブラウザで開きます。", gamePass: "Game Pass", freeGames: "無料ゲーム", settings: "ゲームプラットフォーム", openStore: "公式ストアを開く" },
     featured: { top: "人気ランキング", specials: "セール中" },
     search: {
       kicker: "STEAM / 公開データ", title: "ゲームを検索",
@@ -360,6 +363,7 @@ const I18N = {
     },
     theme: { label: "Darstellung", system: "System", light: "Hell", dark: "Dunkel" },
     public: { label: "Gemeinnütziges Projekt", askTitle: "Möchtest du ein gemeinnütziges Projekt unterstützen?", askSub: "Wenn du zustimmst, zeigt Gauge lokale öffentliche Hinweise in deiner Oberflächensprache. Die Inhalte stammen aus öffentlichen Informationen von Hilfsorganisationen; es werden keine persönlichen Daten erhoben. Du kannst die Anzeige jederzeit in den Einstellungen ausschalten.", yes: "Ja, gerne", no: "Nicht jetzt", note: "Die Hinweise dienen der öffentlichen Information und sind keine Werbung.", continue: "Weiter", badge: "Gemeinnützig", next: "Nächster", view: "Öffentliche Hinweise ansehen", on: "Am Projekt teilnehmen", off: "Öffentliche Hinweise aus", settingsHint: "Wenn aktiviert, werden lokale öffentliche Hinweise in deiner Sprache angezeigt.", empty: "Öffentliche Hinweise sind derzeit nicht verfügbar.", enabled: "Gemeinnütziges Projekt aktiviert", disabled: "Öffentliche Hinweise ausgeschaltet" },
+    platform: { label: "Spielplattform", beta: "Beta", betaNote: "PlayStation / Xbox / Epic / WeGame nutzen derzeit die offizielle Store-Suche im integrierten Browser. Preise und Verfügbarkeit richten sich nach der Store-Seite.", searchTitle: "Auf {name} suchen", searchPlaceholder: "Spiele auf {name} suchen", wegameSearch: "WeGame unterstützt noch keine direkte Suche; der offizielle Store wurde geöffnet.", browse: "{name} durchsuchen", webSub: "Den offiziellen {name}-Store im Standardbrowser öffnen.", gamePass: "Game Pass", freeGames: "Kostenlose Spiele", settings: "Spielplattform", openStore: "Offiziellen Store öffnen" },
     featured: { top: "Meistverkauft", specials: "Im Angebot" },
     search: {
       kicker: "STEAM / OFFENE DATEN", title: "Spiel suchen",
@@ -450,6 +454,7 @@ const I18N = {
     },
     theme: { label: "화면", system: "시스템", light: "라이트", dark: "다크" },
     public: { label: "공익 프로젝트", askTitle: "공익 프로젝트를 함께할까요?", askSub: "동의하면 인터페이스 언어에 맞춰 지역 공익 광고를 표시합니다. 내용은 공익 기관의 공개 정보이며 개인 데이터를 수집하지 않습니다. 설정에서 언제든 끌 수 있습니다.", yes: "참여할게요", no: "나중에", note: "공공 정보 전달을 위한 표시이며 상업 광고가 아닙니다.", continue: "계속", badge: "공익", next: "다음", view: "공익 광고 보기", on: "공익 프로젝트 참여", off: "공익 광고 끄기", settingsHint: "켜면 인터페이스 언어에 맞춰 지역 공익 광고를 표시합니다.", empty: "공익 콘텐츠를 현재 사용할 수 없습니다.", enabled: "공익 프로젝트를 켰습니다", disabled: "공익 광고를 껐습니다" },
+    platform: { label: "게임 플랫폼", beta: "베타", betaNote: "PlayStation / Xbox / Epic / WeGame은 현재 공식 스토어 검색을 앱 내 브라우저에서 엽니다. 가격과 구매 가능 여부는 스토어 페이지를 기준으로 합니다.", searchTitle: "{name}에서 검색", searchPlaceholder: "{name}에서 게임 검색", wegameSearch: "WeGame은 아직 직접 검색을 지원하지 않아 공식 스토어를 열었습니다.", browse: "{name} 둘러보기", webSub: "기본 브라우저에서 {name} 공식 스토어를 엽니다.", gamePass: "Game Pass", freeGames: "무료 게임", settings: "게임 플랫폼", openStore: "공식 스토어 열기" },
     featured: { top: "인기 판매", specials: "할인 중" },
     search: {
       kicker: "STEAM / 공개 데이터", title: "게임 검색",
@@ -540,6 +545,7 @@ const I18N = {
     },
     theme: { label: "المظهر", system: "النظام", light: "فاتح", dark: "داكن" },
     public: { label: "مشروع خيري", askTitle: "هل ترغب في دعم مشروع خيري؟", askSub: "إذا وافقت، سيعرض Gauge رسائل خدمة عامة محلية حسب لغة الواجهة. المحتوى من معلومات عامة تنشرها مؤسسات مدنية، ولا تُجمع أي بيانات شخصية، ويمكنك إيقافه في أي وقت من الإعدادات.", yes: "أوافق", no: "ليس الآن", note: "هذه الرسائل للمعلومات العامة فقط وليست إعلانات تجارية.", continue: "متابعة", badge: "خدمة عامة", next: "التالي", view: "عرض رسائل الخدمة العامة", on: "المشاركة في المشروع", off: "إيقاف الرسائل العامة", settingsHint: "عند التفعيل، تُعرض رسائل خدمة عامة محلية بلغة الواجهة.", empty: "محتوى الخدمة العامة غير متاح مؤقتًا.", enabled: "تم تفعيل المشروع الخيري", disabled: "تم إيقاف الرسائل العامة" },
+    platform: { label: "منصة الألعاب", beta: "تجريبي", betaNote: "تستخدم PlayStation / Xbox / Epic / WeGame حاليًا بحث المتجر الرسمي داخل المتصفح المدمج. الأسعار والتوفر حسب صفحة المتجر.", searchTitle: "البحث في {name}", searchPlaceholder: "ابحث عن ألعاب على {name}", wegameSearch: "لا يدعم WeGame البحث المباشر بعد؛ تم فتح المتجر الرسمي.", browse: "تصفح {name}", webSub: "افتح متجر {name} الرسمي في المتصفح الافتراضي.", gamePass: "Game Pass", freeGames: "ألعاب مجانية", settings: "منصة الألعاب", openStore: "فتح المتجر الرسمي" },
     featured: { top: "الأكثر مبيعًا", specials: "عروض" },
     search: {
       kicker: "STEAM / بيانات عامة", title: "ابحث عن لعبة",
